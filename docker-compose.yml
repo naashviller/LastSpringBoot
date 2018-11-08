@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  
+  spring-boot:
+    build: SpringBoot
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/java-lab
+      - JDBC_DATABASE_USERNAME=postgres
+      - JDBC_DATABASE_PASSWORD=postgres
+  
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=java-lab
+
+ 
+volumes:
+  db_data:
+    driver: local
